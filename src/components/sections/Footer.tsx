@@ -1,11 +1,12 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Logo from "@/components/ui/Logo";
 import Button from "@/components/ui/Button";
 import { useTranslations } from "@/hooks/useTranslations";
 import ClientOnly from "@/components/ui/ClientOnly";
+import TermsAndConditions from "./TermsAndConditions";
 import {
   FaTwitter,
   FaLinkedin,
@@ -15,10 +16,53 @@ import {
   FaPhoneAlt,
   FaMapMarkerAlt,
   FaArrowRight,
+  FaFileContract,
 } from "react-icons/fa";
 
 const Footer: React.FC = () => {
   const { t } = useTranslations();
+  const [isTermsOpen, setIsTermsOpen] = useState(false);
+
+  const openTermsModal = () => {
+    setIsTermsOpen(true);
+    // Actualizar la URL sin recargar la página
+    window.history.pushState({}, "", "#terminos");
+  };
+
+  const closeTermsModal = () => {
+    setIsTermsOpen(false);
+    // Restaurar la URL original
+    window.history.pushState({}, "", window.location.pathname);
+  };
+
+  // Detectar si la URL tiene el hash #terminos al cargar la página
+  useEffect(() => {
+    const checkHash = () => {
+      if (window.location.hash === "#terminos") {
+        setIsTermsOpen(true);
+      }
+    };
+
+    // Verificar al cargar el componente
+    checkHash();
+
+    // Escuchar cambios en el hash (navegación del navegador)
+    window.addEventListener("hashchange", checkHash);
+
+    // Escuchar tecla Escape para cerrar el modal
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && isTermsOpen) {
+        closeTermsModal();
+      }
+    };
+
+    window.addEventListener("keydown", handleEscape);
+
+    return () => {
+      window.removeEventListener("hashchange", checkHash);
+      window.removeEventListener("keydown", handleEscape);
+    };
+  }, [isTermsOpen]);
 
   const socialLinks = [
     {
@@ -222,6 +266,13 @@ const Footer: React.FC = () => {
                   {item}
                 </a>
               ))}
+              <button
+                onClick={openTermsModal}
+                className="flex items-center space-x-2 text-gray-400 hover:text-gold-primary transition-colors duration-300 text-sm"
+              >
+                <FaFileContract className="text-xs" />
+                <span>Términos y Condiciones</span>
+              </button>
             </div>
           </div>
         </motion.div>
@@ -269,6 +320,9 @@ const Footer: React.FC = () => {
           </div>
         </motion.div>
       </motion.div>
+
+      {/* Terms and Conditions Modal */}
+      <TermsAndConditions isOpen={isTermsOpen} onClose={closeTermsModal} />
     </footer>
   );
 };
