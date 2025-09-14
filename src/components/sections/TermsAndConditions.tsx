@@ -44,7 +44,6 @@ const TermsAndConditions: React.FC<TermsAndConditionsProps> = ({
       scale: 1,
       transition: {
         duration: 0.3,
-        ease: "easeOut",
       },
     },
     exit: {
@@ -52,7 +51,6 @@ const TermsAndConditions: React.FC<TermsAndConditionsProps> = ({
       scale: 0.9,
       transition: {
         duration: 0.2,
-        ease: "easeIn",
       },
     },
   };
@@ -211,21 +209,21 @@ const TermsAndConditions: React.FC<TermsAndConditionsProps> = ({
                           <div className="space-y-3">
                             <p>
                               <strong className="text-gold-primary">
-                                "Agencia Alpha" o "la Empresa":
+                                &quot;Agencia Alpha&quot; o &quot;la Empresa&quot;:
                               </strong>{" "}
                               Carlos César Gil Peralta operando bajo el nombre
                               comercial Agencia Alpha México.
                             </p>
                             <p>
                               <strong className="text-gold-primary">
-                                "Cliente" o "Usuario":
+                                &quot;Cliente&quot; o &quot;Usuario&quot;:
                               </strong>{" "}
                               Persona física o moral que contrata los servicios
                               de Agencia Alpha.
                             </p>
                             <p>
                               <strong className="text-gold-primary">
-                                "Servicios":
+                                &quot;Servicios&quot;:
                               </strong>{" "}
                               Los servicios de automatización empresarial con
                               inteligencia artificial, desarrollo de agentes de
@@ -234,7 +232,7 @@ const TermsAndConditions: React.FC<TermsAndConditionsProps> = ({
                             </p>
                             <p>
                               <strong className="text-gold-primary">
-                                "Agentes de IA":
+                                &quot;Agentes de IA&quot;:
                               </strong>{" "}
                               Software especializado basado en inteligencia
                               artificial desarrollado por Agencia Alpha.
