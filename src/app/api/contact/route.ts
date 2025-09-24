@@ -1,6 +1,7 @@
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Inicializar Resend solo si hay API key
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
 export async function POST(request: Request) {
   try {
@@ -25,7 +26,7 @@ export async function POST(request: Request) {
     });
 
     // Verificar si está configurado Resend
-    if (!process.env.RESEND_API_KEY) {
+    if (!resend) {
       console.warn("RESEND_API_KEY no configurada - usando modo simulación");
 
       return new Response(
@@ -218,9 +219,9 @@ Este mensaje fue enviado desde tu Alpha Landing Page.
       JSON.stringify({
         error: "Error interno del servidor",
         details:
-          process.env.NODE_ENV === "development" 
-            ? error instanceof Error 
-              ? error.message 
+          process.env.NODE_ENV === "development"
+            ? error instanceof Error
+              ? error.message
               : String(error)
             : undefined,
       }),
